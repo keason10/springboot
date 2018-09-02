@@ -1,0 +1,4 @@
+student:
+  id: 1001
+  name: student1001
+  age: ${random.int[50,100]}
