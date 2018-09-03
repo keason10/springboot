@@ -2,3 +2,8 @@ student:
   id: 1001
   name: student1001
   age: ${random.int[50,100]}
+#sex-str 可绑定 sexStr,松绑定
+  sex-str: "man"
+  map:
+    key1: key1
+    key2: key2

@@ -11,9 +11,18 @@
 spring:
   main:
     banner-mode: "console"
-
-
 # 设置当前激活profile
   profiles:
     active: dev
 
+# 自定义启动时的banner
+  banner:
+#    location: "file:d://banner.txt"  注意这种路径中带有冒号的，和yml 文件冒号冲突，所以需要用引号括起来
+#  location: "classpath:banner.txt"
+  location: classpath:banner.txt
+
+
+#额外日志设置  file 和 path 只能配置一个
+logging:
+  file: d:\\test.log
+  path:
