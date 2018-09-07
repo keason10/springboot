@@ -4,8 +4,8 @@ import com.wykj.springboot.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,13 +23,13 @@ public class MyController {
     @Autowired
     ApplicationArguments applicationArguments;
 
-    @GetMapping(path = "/getVal")
+    @RequestMapping(path = "/getVal",method = RequestMethod.GET)
     public String getValue() {
         applicationArguments.getNonOptionArgs();
         return student;
     }
 
-    @GetMapping(path = "/getStudent")
+    @RequestMapping(path = "/getStudent",method = RequestMethod.GET)
     public Student getStudent() {
         return studentEntity;
     }
