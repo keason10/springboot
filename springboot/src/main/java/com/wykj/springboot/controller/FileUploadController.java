@@ -25,6 +25,7 @@ public class FileUploadController {
                     fileName = files[i].getOriginalFilename();
                     byte[] bytes = files[i].getBytes();
                     BufferedOutputStream buffStream =
+                            //进过测试默认上传到了 C:\tmp 目录之下
                             new BufferedOutputStream(new FileOutputStream(new File("/tmp/" + fileName)));
                     buffStream.write(bytes);
                     buffStream.close();
