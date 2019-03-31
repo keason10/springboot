@@ -15,7 +15,19 @@ spring:
   profiles:
     active: dev
 
-# 自定义启动时的banner
+#文件上传 spring boot默认访问 classpath下边的
+#/static
+#/public
+#/resources
+#/META-INF/resources
+  mvc:
+    stat
+    view:
+      prefix: /page/
+      suffix: .html
+
+
+  # 自定义启动时的banner
   banner:
 #    location: "file:d://banner.txt"  注意这种路径中带有冒号的，和yml 文件冒号冲突，所以需要用引号括起来
 #  location: "classpath:banner.txt"
@@ -26,3 +38,11 @@ spring:
 logging:
   file: d:\\test.log
   path:
+
+
+# 文件上传配置 上传文件大小 请求文件大小
+multipart:
+  max-file-size: 1Mb
+  max-request-size: 10Mb
+  enabled: true
+

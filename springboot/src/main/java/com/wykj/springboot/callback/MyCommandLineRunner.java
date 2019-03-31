@@ -18,7 +18,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         System.out.println(strings);
-        if (!"keason".equals(id)) {
+        if ("keason".equals(id)) {
             throw new IllegalArgumentException("参数错误");
         }
 
