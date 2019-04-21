@@ -1,6 +1,8 @@
 package com.wykj.springboot.cfg.interceptor;
 
+import com.wykj.springboot.annotation.MyMethodAnnotation;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -28,6 +30,10 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
         System.out.println(((HandlerMethod)handler).getMethod());
         System.out.println(((HandlerMethod)handler).getMethodParameters());
         request.setAttribute("startTime",new Date().getTime());
+
+        //判断方法是否有注解 如果没有注解返回null,  如果有注解返回声明的相应注解
+        MyMethodAnnotation myMethodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(MyMethodAnnotation.class);
+        PostMapping postMapping = ((HandlerMethod) handler).getMethodAnnotation(PostMapping.class);
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.wykj.springboot.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.wykj.springboot.annotation.MyMethodAnnotation;
 import com.wykj.springboot.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,18 +27,19 @@ public class MyController {
     @Autowired
     ApplicationArguments applicationArguments;
 
+    @GetMapping(path = "/getStudent")
+    @MyMethodAnnotation(value = "isMe")
+    public Student getStudent(String str) {
+        System.out.println("str " + str);
+        return studentEntity;
+    }
+
     @GetMapping("/getVal")
     public String getValue() {
         applicationArguments.getNonOptionArgs();
         return student;
     }
 
-
-    @GetMapping(path = "/getStudent")
-    public Student getStudent(String str) {
-        System.out.println("str " + str);
-        return studentEntity;
-    }
 
     @GetMapping(path = "/getStudentBase")
     @JsonView(Student.StudentBase.class)
