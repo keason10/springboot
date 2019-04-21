@@ -21,7 +21,6 @@ spring:
 #/resources
 #/META-INF/resources
   mvc:
-    stat
     view:
       prefix: /page/
       suffix: .html

@@ -12,8 +12,7 @@ import java.io.FileOutputStream;
 @RequestMapping(path= "upload")
 public class FileUploadController {
 
-    @RequestMapping(path = "saveFile" ,method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping("saveFile")
     //文件的话只需要一个变量即，多文件上传的话就将MultipartFile改为数组，然后分别上传保存即可
     //注意@RequestParam("file") 变量file 不能修改，是按照file 变量自动识别的
     public String uploadFile(@RequestParam("file") MultipartFile[] files) {
