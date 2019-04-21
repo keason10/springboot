@@ -18,6 +18,7 @@ public class MyExceptionAdvice {
     @ResponseBody
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String,Object> getException(HttpRequest request, HttpResponse response,Exception ex) throws Exception{
+        //如果碰到了某个自定义异常加上了@ResponseStatus，就继续抛出，这样就不会让自定义异常失去加上
         if (AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class) != null) {
             throw ex;
         }

@@ -2,6 +2,7 @@ package com.wykj.springboot;
 
 import com.alibaba.fastjson.JSON;
 import com.wykj.springboot.service.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,6 +39,20 @@ public class MySpringBootBaseTest {
                         .andExpect(jsonPath("$.id").value(1001))
                         .andReturn().getResponse().getContentAsString();
         System.out.println(retrunStr);
+
+        retrunStr =
+                mvc.perform(get("/ctrl/getStudentBase").contentType(MediaType.APPLICATION_JSON_UTF8).param("str", "string1001"))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.id").value(1001))
+                        .andReturn().getResponse().getContentAsString();
+        log.error("{} {}","getStudentBase",retrunStr);
+
+        retrunStr =
+                mvc.perform(get("/ctrl/getStudentAll").contentType(MediaType.APPLICATION_JSON_UTF8).param("str", "string1001"))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.id").value(1001))
+                        .andReturn().getResponse().getContentAsString();
+        log.error("{} {}","getStudentAll",retrunStr);
     }
 
     @Test

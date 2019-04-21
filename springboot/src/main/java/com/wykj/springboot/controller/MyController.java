@@ -1,5 +1,6 @@
 package com.wykj.springboot.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.wykj.springboot.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,8 +32,23 @@ public class MyController {
         return student;
     }
 
+
     @GetMapping(path = "/getStudent")
     public Student getStudent(String str) {
+        System.out.println("str " + str);
+        return studentEntity;
+    }
+
+    @GetMapping(path = "/getStudentBase")
+    @JsonView(Student.StudentBase.class)
+    public Student getStudentBase(String str) {
+        System.out.println("str " + str);
+        return studentEntity;
+    }
+
+    @GetMapping(path = "/getStudentAll")
+    @JsonView(Student.StudentAll.class)
+    public Student getStudentAll(String str) {
         System.out.println("str " + str);
         return studentEntity;
     }

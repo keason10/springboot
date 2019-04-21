@@ -1,5 +1,6 @@
 package com.wykj.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,26 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "student")
 @Data
 public class Student {
+    public interface StudentBase {};
+    public interface StudentAll extends StudentBase{};
+
+   @JsonView(StudentBase.class)
     private Integer id;
+
+    @JsonView(StudentBase.class)
     @NotBlank(message ="姓名不能为空")
     private String name;
+
+    @JsonView(StudentBase.class)
     private Integer age;
+
+    @JsonView(StudentBase.class)
     private String sexStr;
+
+    @JsonView(StudentAll.class)
     @Past
     private Date birthday;
+
+    @JsonView(StudentAll.class)
     private Map map;
 }
