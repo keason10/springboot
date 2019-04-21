@@ -24,7 +24,7 @@ public class MySyncController {
     public DeferredResult<String> getDeferredResult() throws Exception{
         //设置 5秒就会超时
         final DeferredResult<String> stringDeferredResult = new DeferredResult<String>(5000L);
-
+        log.info("deferredResult enter");
         //将请求加入到队列中
         deferredResultsQueue.add(stringDeferredResult);
         final String message = "{username:keason}";
@@ -40,7 +40,7 @@ public class MySyncController {
                 }
 
                 //业务处理
-                System.out.println("业务处理");
+                log.info("deferredResult 业务处理 ");
                 stringDeferredResult.setResult(message);
             }
         });
@@ -50,7 +50,7 @@ public class MySyncController {
         stringDeferredResult.onCompletion(new Runnable() {
             @Override
             public void run() {
-                System.out.println("异步调用完成");
+                log.info("deferredResult 异步调用完成 ");
                 //响应完毕之后，将请求从队列中去除掉
                 deferredResultsQueue.remove(stringDeferredResult);
             }
@@ -59,7 +59,7 @@ public class MySyncController {
         stringDeferredResult.onTimeout(new Runnable() {
             @Override
             public void run() {
-                System.out.println("业务处理超时");
+                log.info("deferredResult 业务处理超时 ");
                 stringDeferredResult.setResult("error:timeOut");
             }
         });
