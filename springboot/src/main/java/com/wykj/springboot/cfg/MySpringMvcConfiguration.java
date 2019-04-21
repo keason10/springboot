@@ -33,7 +33,7 @@ public class MySpringMvcConfiguration extends WebMvcConfigurerAdapter {
 //    自定义拦截器MyInterceptor 注册
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(myInterceptor);
+//        registry.addInterceptor(myInterceptor);
     }
 
     //自定义Filter 需要手动注册Filter    相当于定义web.xml
