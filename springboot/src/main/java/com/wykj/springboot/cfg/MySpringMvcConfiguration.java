@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.List;
  * 重写springMVC 配置
  */
 @Configuration
-public class MySpringMvcConfiguration extends WebMvcConfigurerAdapter {
+public class MySpringMvcConfiguration extends WebMvcConfigurationSupport {
     @Autowired
     private MyInterceptor myInterceptor;
 
@@ -34,6 +33,13 @@ public class MySpringMvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(myInterceptor);
+    }
+
+    //异步请求配置线程超时，和线程池配置
+    @Override
+    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+        configurer.setDefaultTimeout(5 * 1000);
+        configurer.setTaskExecutor(new SimpleAsyncTaskExecutor());
     }
 
     //自定义Filter 需要手动注册Filter    相当于定义web.xml

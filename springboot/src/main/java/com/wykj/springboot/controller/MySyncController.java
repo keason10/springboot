@@ -3,11 +3,14 @@ package com.wykj.springboot.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ExecutorService;
@@ -18,7 +21,7 @@ import java.util.concurrent.Executors;
 @RestController
 public class MySyncController {
 //    ==============================================================DeferredResult ===================================================
-    //用队列接收很多请求
+    //用队列接收很多请求 好处就是请求不会长时间占用http 服务连接池，提高服务器的吞吐量。
     private ConcurrentLinkedDeque<DeferredResult<String>> deferredResultsQueue = new ConcurrentLinkedDeque<DeferredResult<String>>();
     @GetMapping("/deferredResult")
     public DeferredResult<String> getDeferredResult() throws Exception{
@@ -81,18 +84,29 @@ public class MySyncController {
 
 
     //    ==============================================================Callable  ===================================================
-    @GetMapping("/callable")
-    public Callable<String> getStr(){
-        try {
+    @PostMapping("/callable")
+    public Callable<Map> getStr(){
             log.info("com.wykj.springboot.controller.MySyncController.getStr enter");
-            Thread.sleep(5000);
             return () -> {
                 log.info("com.wykj.springboot.controller.MySyncController.getStr enter callable");
-                return "hello keason callable";
+                Thread.sleep(4000);
+                Map map = new HashMap<>();
+                map.put("msg", "hello keason callable");
+                return map;
             };
+    }
+
+    @PostMapping("/nocallable")
+    public Map getStrNo(){
+        try {
+            log.info("com.wykj.springboot.controller.MySyncController.getStr enter callable");
+            Thread.sleep(4000);
+            Map map = new HashMap<>();
+            map.put("msg", "hello keason callable");
+            return map;
         } catch (InterruptedException e) {
-            log.error("com.wykj.springboot.controller.MySyncController.getStr error", e);
-            return null;
+            e.printStackTrace();
+            return new HashMap();
         }
     }
 
