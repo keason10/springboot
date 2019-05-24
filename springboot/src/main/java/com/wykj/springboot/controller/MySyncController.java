@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -89,7 +90,7 @@ public class MySyncController {
             log.info("com.wykj.springboot.controller.MySyncController.getStr enter");
             return () -> {
                 log.info("com.wykj.springboot.controller.MySyncController.getStr enter callable");
-                Thread.sleep(4000);
+                Thread.sleep(6000);
                 Map map = new HashMap<>();
                 map.put("msg", "hello keason callable");
                 return map;
@@ -109,5 +110,24 @@ public class MySyncController {
             return new HashMap();
         }
     }
+
+    @PostMapping("/getWebAsyncTask")
+    public WebAsyncTask<Map> getWebAsyncTask(){
+        log.info("com.wykj.springboot.controller.MySyncController.getStr enter");
+        WebAsyncTask task = new WebAsyncTask(5000,() -> {
+            log.info("com.wykj.springboot.controller.MySyncController.getStr enter callable");
+            Thread.sleep(4000);
+            Map map = new HashMap<>();
+            map.put("msg", "hello keason callable");
+            return map;
+        });
+        task.onTimeout(()->{
+            Map map = new HashMap<>();
+            map.put("msg", "timeout");
+            return map;
+        });
+        return task;
+    }
+
 
 }
