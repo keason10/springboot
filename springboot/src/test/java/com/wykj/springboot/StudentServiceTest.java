@@ -10,8 +10,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 /**
- * mockito  @Autowired 文档
+ * mockito  @Autowired 示例 文档
  * {@link "https://zhuanlan.zhihu.com/p/21444517"}
+ *
+ * 官方文档
+ * {@link "https://static.javadoc.io/org.mockito/mockito-core/3.0.0/org/mockito/Mockito.html"}
+ *
  */
 public class StudentServiceTest extends MySpringBootBaseTest {
    // 对被测类中@Autowired的对象，用@Mocks标注；对被测类自己，用@InjectMocks标注。
