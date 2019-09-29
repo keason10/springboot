@@ -36,11 +36,11 @@ public class MySpringMvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     //异步请求配置线程超时，和线程池配置
-    @Override
-    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
-        configurer.setDefaultTimeout(5 * 1000);
-        configurer.setTaskExecutor(new SimpleAsyncTaskExecutor());
-    }
+//    @Override
+//    public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+//        configurer.setDefaultTimeout(5 * 1000);
+//        configurer.setTaskExecutor(new SimpleAsyncTaskExecutor());
+//    }
 
     //自定义Filter 需要手动注册Filter    相当于定义web.xml
     @Bean
