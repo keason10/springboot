@@ -18,7 +18,7 @@ public class MyController {
     @Autowired
     Student studentEntity;
 
-    @Value("${student.id}")
+    @Value("${student.id:'id0001'}")
     String student;
 
     /**

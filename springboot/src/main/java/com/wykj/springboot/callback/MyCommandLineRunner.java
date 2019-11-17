@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
 
-    @Value("${student.id}")
+    @Value("${student.id:'id001'}")
     String id;
 
     @Override
