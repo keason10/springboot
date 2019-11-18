@@ -1,25 +1,27 @@
 package com.wykj.springboot;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.annotation.Repeat;
-import org.springframework.test.annotation.SystemProfileValueSource;
 import org.springframework.test.annotation.Timed;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Map;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,11 +29,35 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @PropertySource("classpath:application-pro.yml")
 @ExtendWith(SpringExtension.class)
 public class MybaseTest {
+
+    /***自定义内部类，完成自定义属性加载*/
+    public class  MyPropertyResource extends org.springframework.core.env.PropertySource {
+        Map map = Maps.newHashMap(ImmutableMap.of("test.key1","key1","test.key2","key2"));
+
+        public MyPropertyResource(String name, Object source) {
+            super(name, source);
+        }
+
+
+        @Override
+        public Object getProperty(String name) {
+            return map.get(name);
+        }
+    }
+
     @Autowired
     private Environment environment;
-    @Autowired
-    private ApplicationContext context;
 
+
+    /**
+     * 初始化自定义属性
+     */
+    @Test
+    @Before
+    public void addMyProperty() {
+        StandardEnvironment standardEnvironment = ((StandardEnvironment) environment);
+        standardEnvironment.getPropertySources().addFirst(new MyPropertyResource("myPropertyResource", this));
+    }
 
 
     @Test
@@ -42,7 +68,7 @@ public class MybaseTest {
     }
 
     @Test
-    @Timed(millis = 2000)
+    @Timed(millis = 60000)
     public void testTimed() throws InterruptedException {
         Thread.sleep(9);
     }
@@ -54,12 +80,17 @@ public class MybaseTest {
     }
 
 
+    /**
+     * IfProfileValue 如果没有配置 ProfileValueSourceConfiguration ，默认使用SystemProfileValueSource获取值
+     */
     @Test
-    @IfProfileValue(name="profile",value = "pro")
+    @IfProfileValue(name="user.country",value = "CN")
     public void testProfileValue() {
-        System.out.printf("profile dev");
-        System.out.println("environment:" + environment.getActiveProfiles());
-        System.out.println("environment:student" + JSON.toJSONString(environment.getProperty("student")));
+        StandardEnvironment standardEnvironment = ((StandardEnvironment) environment);
+        standardEnvironment.getPropertySources().forEach(info->{
+            System.out.println(info.getName());
+        });
+        System.out.println("environment:user.country" + JSON.toJSONString(environment.getProperty("user.country")));
     }
 
     @org.junit.jupiter.api.Test
