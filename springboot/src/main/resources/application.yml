@@ -45,3 +45,8 @@ multipart:
   max-request-size: 10Mb
   enabled: true
 
+
+redis:
+  redisUri: "redis://127.0.0.1:6380"
+#  passwd: xxxx
+  adsDetectProcessLockSeconds: 5
