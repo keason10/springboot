@@ -1,13 +1,6 @@
-#设置显示Spring 那个打印字段
-#
-#  .   ____          _            __ _ _
- # /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
- #( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- # \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
- #  '  |____| .__|_| |_|_| |_\__, | / / / /
- # =========|_|==============|___/=/_/_/_/
- # :: Spring Boot ::        (v2.0.4.RELEASE)
-#
+server:
+  port: 9999
+
 spring:
   main:
     banner-mode: "console"
@@ -26,27 +19,9 @@ spring:
       suffix: .html
 
 
-  # 自定义启动时的banner
-  banner:
-#    location: "file:d://banner.txt"  注意这种路径中带有冒号的，和yml 文件冒号冲突，所以需要用引号括起来
-#  location: "classpath:banner.txt"
-  location: classpath:banner.txt
-
-
-#额外日志设置  file 和 path 只能配置一个
-logging:
-  file: d:\\test.log
-  path:
-
-
 # 文件上传配置 上传文件大小 请求文件大小
 multipart:
   max-file-size: 1Mb
   max-request-size: 10Mb
   enabled: true
 
-
-redis:
-  redisUri: "redis://127.0.0.1:6380"
-#  passwd: xxxx
-  adsDetectProcessLockSeconds: 5

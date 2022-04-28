@@ -1,20 +1,21 @@
 package com.wykj.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import java.util.Date;
-import java.util.Map;
+import org.springframework.validation.annotation.Validated;
 
 
 @Component
 @ConfigurationProperties(prefix = "student")
 @Data
-public class Student {
+public class Student implements Serializable {
     public interface StudentBase {};
     public interface StudentAll extends StudentBase{};
 

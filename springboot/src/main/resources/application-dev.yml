@@ -7,3 +7,26 @@ student:
   map:
     key1: key1
     key2: key2
+
+
+spring:
+  datasource:
+    password: root
+    username: root
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:33060/test_db?useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&enabledTLSProtocols=TLSv1.2&useSSL=false
+    hikari:
+      schema: test_db
+      minimum-idle: 5
+      maximum-pool-size: 10
+      pool-name: MyHikariCP
+      connection-test-query: select 1
+
+
+  redis:
+    host: 127.0.0.1
+    port: 63790
+redis:
+  redisUri: "redis://127.0.0.1:63790"
+  #  passwd: xxxx
