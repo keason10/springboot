@@ -38,9 +38,15 @@ public class MyLockAspect {
         Method targetMethod = methodSignature.getMethod();
         MyLockAnnotation lockAnnotation = targetMethod.getAnnotation(MyLockAnnotation.class);
         String keyJSONPath = lockAnnotation.keyJSONPath();
-        Object businessKey = JsonPath.<Object>read(JSON.toJSONString(objects[0]), keyJSONPath);
-        if (businessKey == null) {
-            throw new RuntimeException(String.format("MyLockAnnotation 根据 第一个参数的[%s]属性获得的businessKey为空", keyJSONPath));
+        Object businessKey = null;
+        try {
+            businessKey = JsonPath.read(JSON.toJSONString(objects[0]), keyJSONPath);
+            if (businessKey == null) {
+                throw new RuntimeException(String.format("MyLockAspect 根据第一个参数的[%s]属性获得的businessKey为空", keyJSONPath));
+            }
+        } catch (RuntimeException e) {
+            log.error("执行 MyLockAspect handleLockAnnotation 异常", e);
+            throw new RuntimeException(String.format("MyLockAspect 根据第一个参数的[%s]属性获取businessKey异常", keyJSONPath));
         }
         String prefix = lockAnnotation.prefix();
         int lockSeconds = lockAnnotation.lockSeconds();
@@ -55,7 +61,7 @@ public class MyLockAspect {
                 redisReadWriteLock.wUnlock();
             }
         } else {
-            throw new RuntimeException(String.format("MyLockAnnotation businessKey %s 获取锁失败", businessKey));
+            throw new RuntimeException(String.format("MyLockAspect businessKey %s 获取锁失败", businessKey));
         }
     }
 }
