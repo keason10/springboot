@@ -30,7 +30,7 @@ public class MyLockAspect {
         Object[] objects = proceedingJoinPoint.getArgs();
 
         if (ArrayUtil.isEmpty(objects)) {
-            throw new RuntimeException("MyLockAnnotation 第一个参数必须存在");
+            throw new RuntimeException("MyLockAnnotation标注的方法第一个参数必须存在");
         }
         //判断方法是否有注解
         Signature signature = proceedingJoinPoint.getSignature();

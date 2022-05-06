@@ -1,6 +1,7 @@
 package com.wykj.springboot.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.google.common.collect.ImmutableMap;
 import com.wykj.springboot.dao.UserDao;
 import com.wykj.springboot.dto.ApiResponse;
@@ -36,6 +37,16 @@ public class MyLockController {
     @MyLockAnnotation(prefix = "lock:redis:spring_boot_student_", keyJSONPath = "$.id", lockSeconds = 5)
     @Transactional
     public ApiResponse<ImmutableMap> tryLockUser(@RequestBody @Validated UserEntity userEntity, BindingResult result) {
+        userEntity.setId(null);
+
+        /**
+         * @link { https://blog.csdn.net/Onstduy/article/details/107901342 }
+         * 雪花算法
+         * 默认workid也不会重复 String name = ManagementFactory.getRuntimeMXBean().getName();
+         */
+        IdWorker.initSequence(1, 1);
+        long id = IdWorker.getId(userEntity);
+
         userEntity.setName("userId01");
         userEntity.setAge(10);
         userEntity.setEmail("www.hello.163.com");
