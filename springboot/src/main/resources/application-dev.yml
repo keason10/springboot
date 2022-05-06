@@ -30,3 +30,14 @@ spring:
 redis:
   redisUri: "redis://127.0.0.1:63790"
   #  passwd: xxxx
+
+
+mybatis-plus:
+  mapper-locations: "classpath*:mapper/**/*.xml"
+  type-aliases-package: "com.wykj.springboot.entity"
+
+logging:
+  level:
+    root: debug
+    com.baomidou.mybatisplus.samples.quickstart: debug
+    com.wykj.springboot: debug

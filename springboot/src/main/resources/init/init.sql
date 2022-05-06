@@ -1,5 +1,6 @@
 create database if not exists test_db CHARACTER SET = utf8;
 
+use test_db;
 
 DROP TABLE IF EXISTS user;
 

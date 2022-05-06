@@ -1,4 +1,4 @@
-package com.wykj.springboot.cfg.annotation;
+package com.wykj.springboot.utils.lock.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 public @interface MyLockAnnotation {
     String prefix();
+    String keyJSONPath();
+    int lockSeconds();
 }
