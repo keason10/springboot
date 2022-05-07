@@ -2,6 +2,7 @@ package com.wykj.springboot.cfg.webfilter;
 
 import com.wykj.springboot.cfg.webfilter.filter.MyComponentFilter;
 import com.wykj.springboot.cfg.webfilter.interceptor.MyInterceptor;
+import com.wykj.springboot.utils.trace.TraceWebFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,8 @@ public class MySpringMvcConfiguration extends WebMvcConfigurationSupport {
     private MyInterceptor myInterceptor;
     @Autowired
     private MyComponentFilter componentFilter;
+    @Autowired
+    private TraceWebFilter traceWebFilter;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -37,12 +40,25 @@ public class MySpringMvcConfiguration extends WebMvcConfigurationSupport {
     }
 
 
+    /**
+     * 自定义Filter 需要手动注册Filter    相当于定义web.xml
+     * Order 数字越小执行越早
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean myFilter1() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(traceWebFilter);
+        filterRegistrationBean.setOrder(1);;
+        return filterRegistrationBean;
+    }
+
     //自定义Filter 需要手动注册Filter    相当于定义web.xml
     @Bean
-    public FilterRegistrationBean myFilter() {
+    public FilterRegistrationBean myFilter2() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(componentFilter);
-
+        filterRegistrationBean.setOrder(2);
         List<String> urls = new ArrayList<>();
         urls.add("/*");
         filterRegistrationBean.setUrlPatterns(urls);

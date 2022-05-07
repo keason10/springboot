@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.Date;
 
 //自定义Filter 自动注入SpringBean，由SpringBean管理
+
+/**
+ * {@link com.wykj.springboot.cfg.webfilter.MySpringMvcConfiguration}
+ * 注册filter和interceptor
+ */
 @Component
 public class MyComponentFilter implements Filter {
     @Override

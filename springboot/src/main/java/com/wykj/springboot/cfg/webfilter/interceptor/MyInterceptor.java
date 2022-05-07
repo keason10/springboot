@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @auther: yant09
  * @date: 2019/1/29 22:25
  * 拦截器配置
+ * {@link com.wykj.springboot.cfg.webfilter.MySpringMvcConfiguration}
+ * 注册filter和interceptor
  */
 // 自定义拦截器MyInterceptor
 @Component

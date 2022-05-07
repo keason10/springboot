@@ -1,5 +1,7 @@
 package com.wykj.springboot.cfg.advice;
 
+import static com.wykj.springboot.cfg.ApplicationStaticConfig.CONTROLLER_ADVICE_SCAN_PACKAGE;
+
 import com.alibaba.fastjson.JSON;
 import com.wykj.springboot.dto.ApiResponse;
 import java.util.HashMap;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @Slf4j
-@ControllerAdvice(basePackages = {"com.wykj.springboot.controller"})
+@ControllerAdvice(basePackages = {CONTROLLER_ADVICE_SCAN_PACKAGE})
 public class MyExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)

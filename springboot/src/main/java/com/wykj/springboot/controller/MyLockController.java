@@ -1,5 +1,6 @@
 package com.wykj.springboot.controller;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.google.common.collect.ImmutableMap;
@@ -9,6 +10,7 @@ import com.wykj.springboot.entity.Student;
 import com.wykj.springboot.entity.UserEntity;
 import com.wykj.springboot.utils.lock.annotation.MyLockAnnotation;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/ctrl")
+@Slf4j
+@RequestMapping(path = "/lock")
 public class MyLockController {
     @Autowired
     Student studentEntity;
@@ -32,7 +35,7 @@ public class MyLockController {
     @Autowired
     private UserDao userDao;
 
-    @PostMapping(path = "/lock")
+    @PostMapping(path = "/user")
     @ResponseBody
     @MyLockAnnotation(prefix = "lock:redis:spring_boot_student_", keyJSONPath = "$.id", lockSeconds = 5)
     @Transactional
