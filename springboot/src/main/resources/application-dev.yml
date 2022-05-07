@@ -38,6 +38,9 @@ mybatis-plus:
 
 logging:
   level:
-    root: debug
+    root: info
     com.baomidou.mybatisplus.samples.quickstart: debug
     com.wykj.springboot: debug
+
+swagger:
+  enable: true

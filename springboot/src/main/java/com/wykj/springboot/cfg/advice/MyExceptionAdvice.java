@@ -1,6 +1,6 @@
 package com.wykj.springboot.cfg.advice;
 
-import static com.wykj.springboot.cfg.ApplicationStaticConfig.CONTROLLER_ADVICE_SCAN_PACKAGE;
+import static com.wykj.springboot.cfg.ZApplicationStaticConfig.CONTROLLER_ADVICE_SCAN_PACKAGE;
 
 import com.alibaba.fastjson.JSON;
 import com.wykj.springboot.dto.ApiResponse;

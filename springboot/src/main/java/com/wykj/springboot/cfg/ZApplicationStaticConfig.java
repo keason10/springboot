@@ -1,11 +1,10 @@
 package com.wykj.springboot.cfg;
 
-public interface ApplicationStaticConfig {
+public interface ZApplicationStaticConfig {
 
     // 异常全局捕获扫描路径
-    String CONTROLLER_ADVICE_SCAN_PACKAGE = "com.wykj.springboot.controller";
+    String  CONTROLLER_ADVICE_SCAN_PACKAGE = "com.wykj.springboot";
 
     // mybatis plus dao 扫描路径
     String MYBATIS_PLUS_MAPPER_SCAN = "com.wykj.springboot.dao";
-
 }

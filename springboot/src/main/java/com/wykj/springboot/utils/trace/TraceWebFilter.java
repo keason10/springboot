@@ -1,5 +1,6 @@
 package com.wykj.springboot.utils.trace;
 
+import com.wykj.springboot.cfg.webfilter.FilterInterceptorCfg;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,15 +10,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 //自定义Filter 自动注入SpringBean，由SpringBean管理
 
 /**
- * {@link com.wykj.springboot.cfg.webfilter.MySpringMvcConfiguration}
+ * {@link FilterInterceptorCfg}
  * 注册filter和interceptor
  */
-@Component
 @Slf4j
 public class TraceWebFilter implements Filter {
     @Override
@@ -26,6 +25,7 @@ public class TraceWebFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        log.info("执行 TraceWebFilter doFilter");
         try {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
 

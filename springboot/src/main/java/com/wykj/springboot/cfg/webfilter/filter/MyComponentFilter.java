@@ -1,6 +1,6 @@
 package com.wykj.springboot.cfg.webfilter.filter;
 
-import org.springframework.stereotype.Component;
+import com.wykj.springboot.cfg.webfilter.FilterInterceptorCfg;
 
 import javax.servlet.*;
 import java.io.IOException;
@@ -9,10 +9,9 @@ import java.util.Date;
 //自定义Filter 自动注入SpringBean，由SpringBean管理
 
 /**
- * {@link com.wykj.springboot.cfg.webfilter.MySpringMvcConfiguration}
+ * {@link FilterInterceptorCfg}
  * 注册filter和interceptor
  */
-@Component
 public class MyComponentFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
