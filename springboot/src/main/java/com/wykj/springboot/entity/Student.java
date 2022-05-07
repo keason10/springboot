@@ -38,4 +38,6 @@ public class Student implements Serializable {
 
     @JsonView(StudentAll.class)
     private Map map;
+
+    private UserEntity userEntity;
 }

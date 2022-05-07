@@ -8,6 +8,7 @@ import com.wykj.springboot.entity.Student;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.validation.BindingResult;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/ctrl")
 public class MyController {
+
     @Autowired
+    @Qualifier("student")
     Student studentEntity;
 
     @Value("${student.id:'id0001'}")

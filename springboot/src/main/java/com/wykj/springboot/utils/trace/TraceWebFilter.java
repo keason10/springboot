@@ -1,6 +1,6 @@
 package com.wykj.springboot.utils.trace;
 
-import com.wykj.springboot.cfg.webfilter.FilterInterceptorCfg;
+import com.wykj.springboot.cfg.FilterInterceptorCfg;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

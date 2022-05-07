@@ -3,7 +3,7 @@ package com.wykj.springboot;
 import static com.wykj.springboot.cfg.ZApplicationStaticConfig.MYBATIS_PLUS_MAPPER_SCAN;
 
 import com.wykj.springboot.cfg.Swagger2AndWebCfg;
-import com.wykj.springboot.cfg.webfilter.FilterInterceptorCfg;
+import com.wykj.springboot.cfg.FilterInterceptorCfg;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,6 +1,6 @@
 package com.wykj.springboot.cfg.webfilter.filter;
 
-import com.wykj.springboot.cfg.webfilter.FilterInterceptorCfg;
+import com.wykj.springboot.cfg.FilterInterceptorCfg;
 
 import javax.servlet.*;
 import java.io.IOException;

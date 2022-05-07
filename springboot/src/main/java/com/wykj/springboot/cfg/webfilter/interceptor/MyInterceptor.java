@@ -1,7 +1,7 @@
 package com.wykj.springboot.cfg.webfilter.interceptor;
 
 import com.wykj.springboot.cfg.annotation.MyMethodAnnotation;
-import com.wykj.springboot.cfg.webfilter.FilterInterceptorCfg;
+import com.wykj.springboot.cfg.FilterInterceptorCfg;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
