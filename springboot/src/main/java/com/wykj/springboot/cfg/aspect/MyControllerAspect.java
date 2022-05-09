@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 @Component
 @Slf4j
 public class MyControllerAspect {
-    @Around("execution(* com.wykj.springboot.controller.MyController.*(..))")
+    @Around("execution(* com.wykj.springboot.controller.MyCommonJacksonController.*(..))")
     public Object handleControllerMethod(ProceedingJoinPoint proceedingJoinPoint)throws Throwable {
         log.warn("com.wykj.springboot.aspect.MyPointCut.handleControllerMethod start");
         Object[] objects = proceedingJoinPoint.getArgs();

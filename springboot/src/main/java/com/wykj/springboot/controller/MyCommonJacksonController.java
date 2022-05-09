@@ -1,13 +1,12 @@
 package com.wykj.springboot.controller;
 
-import cn.hutool.core.collection.ListUtil;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.wykj.springboot.cfg.annotation.MyMethodAnnotation;
@@ -35,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/ctrl")
-public class MyController {
+public class MyCommonJacksonController {
 
     @Autowired
     @Qualifier("student")
@@ -43,6 +42,9 @@ public class MyController {
 
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private TypeFactory typeFactory;
+
 
     @Value("${student.id:'id0001'}")
     String student;
@@ -84,43 +86,45 @@ public class MyController {
 
     /**
      * 复杂的TypeReference
-     * @link {https://hicode.club/articles/2018/03/18/1550590751627.html}
+     *
      * @param str
      * @return
+     * @link {https://hicode.club/articles/2018/03/18/1550590751627.html}
      */
     @GetMapping(path = "/showJackson")
     public Student showJackson(String str) throws JsonProcessingException {
         List<Student> list = Arrays.asList(studentEntity);
         String listStr = objectMapper.writeValueAsString(list);
 
-        CollectionType studentCollType = objectMapper.getTypeFactory()
+        CollectionType studentCollType = typeFactory
                 .constructCollectionType(List.class, Student.class);
         List<Student> listStudents = objectMapper.readValue(listStr, studentCollType);
 
-        ArrayList<ImmutableMap<String, Student>> studentArrayMap = Lists.newArrayList(ImmutableMap.of("student", this.studentEntity));
+        ArrayList<ImmutableMap<String, Student>> studentArrayMap = Lists.newArrayList(
+                ImmutableMap.of("student", this.studentEntity));
         String studentArrayMapStr = objectMapper.writeValueAsString(studentArrayMap);
-        JavaType javaType = objectMapper.getTypeFactory()
+        JavaType javaType = typeFactory
                 .constructParametricType(HashMap.class, String.class, Student.class);
-        JavaType javaTypeTwo = objectMapper.getTypeFactory().constructParametricType(List.class, javaType);
+        JavaType javaTypeTwo = typeFactory.constructParametricType(List.class, javaType);
         ArrayList<ImmutableMap<String, String>> studentArrayMapTwo = objectMapper.readValue(studentArrayMapStr,
                 javaTypeTwo);
 
         Map<String, List<Student>> stringListMap = ImmutableMap.of("students", Arrays.asList(studentEntity));
         String stringListMapStr = objectMapper.writeValueAsString(stringListMap);
-        JavaType javaTypeThree = objectMapper.getTypeFactory()
+        JavaType javaTypeThree = typeFactory
                 .constructParametricType(List.class, Student.class);
-        JavaType javaTypeThreeL = objectMapper.getTypeFactory()
-                .constructMapLikeType(HashMap.class, objectMapper.getTypeFactory().constructType(String.class),
+        JavaType javaTypeThreeL = typeFactory
+                .constructMapLikeType(HashMap.class, typeFactory.constructType(String.class),
                         javaTypeThree);
-        Map<String, List<Student>>  stringListMapStrObj = objectMapper.readValue(stringListMapStr, javaTypeThreeL);
-
+        Map<String, List<Student>> stringListMapStrObj = objectMapper.readValue(stringListMapStr, javaTypeThreeL);
 
         return null;
     }
 
     @PostMapping(path = "/addStudent")
     @ResponseBody
-    public ApiResponse<Student> addStudent(@RequestBody @Validated  Student student, BindingResult result) throws Exception {
+    public ApiResponse<Student> addStudent(@RequestBody @Validated Student student, BindingResult result)
+            throws Exception {
         if (result != null) {
             String reMsg = JSON.toJSONString(
                     result.getAllErrors().stream().map(objectError -> objectError.getDefaultMessage())
@@ -139,7 +143,6 @@ public class MyController {
         System.out.println(student.toString());
         return student;
     }
-
 
 
 }

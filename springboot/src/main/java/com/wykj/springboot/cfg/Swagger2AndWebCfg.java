@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.wykj.springboot.cfg.webfilter.interceptor.MyInterceptor;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -55,7 +56,7 @@ public class Swagger2AndWebCfg extends WebMvcConfigurationSupport {
                 .select()
                 // 为当前包路径
                 .apis(
-                        RequestHandlerSelectors.basePackage(ZApplicationStaticConfig.CONTROLLER_ADVICE_SCAN_PACKAGE)
+                        RequestHandlerSelectors.basePackage(ZApplicationStaticConfig.SWAGGER_SCAN_PACKAGE)
                 )
                 .paths(PathSelectors.any())
                 .build();
@@ -102,6 +103,11 @@ public class Swagger2AndWebCfg extends WebMvcConfigurationSupport {
     @Bean
     public ObjectMapper objectMapper() {
         return getObjectMapper();
+    }
+
+    @Bean
+    public TypeFactory objectMapper(ObjectMapper objectMapper) {
+        return objectMapper.getTypeFactory();
     }
 
     public static ObjectMapper getObjectMapper() {
