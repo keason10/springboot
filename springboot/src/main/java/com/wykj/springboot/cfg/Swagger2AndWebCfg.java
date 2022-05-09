@@ -94,6 +94,11 @@ public class Swagger2AndWebCfg extends WebMvcConfigurationSupport {
                 StandardCharsets.UTF_8);
     }
 
+    /**
+     * 查看jackson文档，typeReference
+     * @link {https://www.baeldung.com/jackson-collection-array}
+     * @return
+     */
     @Bean
     public ObjectMapper objectMapper() {
         return getObjectMapper();

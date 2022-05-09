@@ -1,10 +1,23 @@
 package com.wykj.springboot.controller;
 
+import cn.hutool.core.collection.ListUtil;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.wykj.springboot.cfg.annotation.MyMethodAnnotation;
 import com.wykj.springboot.dto.ApiResponse;
 import com.wykj.springboot.entity.Student;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +40,9 @@ public class MyController {
     @Autowired
     @Qualifier("student")
     Student studentEntity;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Value("${student.id:'id0001'}")
     String student;
@@ -65,6 +81,43 @@ public class MyController {
         return studentEntity;
     }
 
+
+    /**
+     * 复杂的TypeReference
+     * @link {https://hicode.club/articles/2018/03/18/1550590751627.html}
+     * @param str
+     * @return
+     */
+    @GetMapping(path = "/showJackson")
+    public Student showJackson(String str) throws JsonProcessingException {
+        List<Student> list = Arrays.asList(studentEntity);
+        String listStr = objectMapper.writeValueAsString(list);
+
+        CollectionType studentCollType = objectMapper.getTypeFactory()
+                .constructCollectionType(List.class, Student.class);
+        List<Student> listStudents = objectMapper.readValue(listStr, studentCollType);
+
+        ArrayList<ImmutableMap<String, Student>> studentArrayMap = Lists.newArrayList(ImmutableMap.of("student", this.studentEntity));
+        String studentArrayMapStr = objectMapper.writeValueAsString(studentArrayMap);
+        JavaType javaType = objectMapper.getTypeFactory()
+                .constructParametricType(HashMap.class, String.class, Student.class);
+        JavaType javaTypeTwo = objectMapper.getTypeFactory().constructParametricType(List.class, javaType);
+        ArrayList<ImmutableMap<String, String>> studentArrayMapTwo = objectMapper.readValue(studentArrayMapStr,
+                javaTypeTwo);
+
+        Map<String, List<Student>> stringListMap = ImmutableMap.of("students", Arrays.asList(studentEntity));
+        String stringListMapStr = objectMapper.writeValueAsString(stringListMap);
+        JavaType javaTypeThree = objectMapper.getTypeFactory()
+                .constructParametricType(List.class, Student.class);
+        JavaType javaTypeThreeL = objectMapper.getTypeFactory()
+                .constructMapLikeType(HashMap.class, objectMapper.getTypeFactory().constructType(String.class),
+                        javaTypeThree);
+        Map<String, List<Student>>  stringListMapStrObj = objectMapper.readValue(stringListMapStr, javaTypeThreeL);
+
+
+        return null;
+    }
+
     @PostMapping(path = "/addStudent")
     @ResponseBody
     public ApiResponse<Student> addStudent(@RequestBody @Validated  Student student, BindingResult result) throws Exception {
@@ -86,4 +139,7 @@ public class MyController {
         System.out.println(student.toString());
         return student;
     }
+
+
+
 }

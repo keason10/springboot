@@ -4,6 +4,7 @@ import static com.wykj.springboot.cfg.ZApplicationStaticConfig.MYBATIS_PLUS_MAPP
 
 import com.wykj.springboot.cfg.Swagger2AndWebCfg;
 import com.wykj.springboot.cfg.FilterInterceptorCfg;
+import com.wykj.springboot.utils.feign.OpenFeignCfg;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 @MapperScan(MYBATIS_PLUS_MAPPER_SCAN)
-@Import({FilterInterceptorCfg.class, Swagger2AndWebCfg.class})
+@Import({FilterInterceptorCfg.class, Swagger2AndWebCfg.class, OpenFeignCfg.class})
 public class SpringbootApplication {
 
     public static void main(String[] args) {

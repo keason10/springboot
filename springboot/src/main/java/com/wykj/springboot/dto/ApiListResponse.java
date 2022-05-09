@@ -1,6 +1,4 @@
 package com.wykj.springboot.dto;
-
-import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import lombok.Getter;

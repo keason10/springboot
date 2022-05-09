@@ -10,7 +10,7 @@ import lombok.Data;
 @TableName("user")
 @Data
 @ApiModel(value = "用户信息", description = "用户信息")
-public class UserEntity {
+public class UserEntity extends BaseDO{
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
     @ApiModelProperty(value = "用户名",name = "name",example = "张三")
