@@ -2,7 +2,6 @@ package com.wykj.springboot.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -12,6 +11,8 @@ import com.google.common.collect.Lists;
 import com.wykj.springboot.cfg.annotation.MyMethodAnnotation;
 import com.wykj.springboot.dto.ApiResponse;
 import com.wykj.springboot.entity.Student;
+import com.wykj.springboot.utils.ApplicationContextUtil;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 @RequestMapping(path = "/ctrl")
 public class MyCommonJacksonController {
 
@@ -41,10 +44,10 @@ public class MyCommonJacksonController {
     Student studentEntity;
 
     @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
     private TypeFactory typeFactory;
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Value("${student.id:'id0001'}")
     String student;
@@ -92,7 +95,7 @@ public class MyCommonJacksonController {
      * @link {https://hicode.club/articles/2018/03/18/1550590751627.html}
      */
     @GetMapping(path = "/showJackson")
-    public Student showJackson(String str) throws JsonProcessingException {
+    public Object showJackson(String str) throws IOException {
         List<Student> list = Arrays.asList(studentEntity);
         String listStr = objectMapper.writeValueAsString(list);
 
@@ -118,7 +121,9 @@ public class MyCommonJacksonController {
                         javaTypeThree);
         Map<String, List<Student>> stringListMapStrObj = objectMapper.readValue(stringListMapStr, javaTypeThreeL);
 
-        return null;
+        log.info("执行 MyCommonJacksonController showJackson 参数 {}",
+                ApplicationContextUtil.getResourceText("classpath:application-dev.yml"));
+        return stringListMapStrObj ;
     }
 
     @PostMapping(path = "/addStudent")

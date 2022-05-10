@@ -1,5 +1,6 @@
 package com.wykj.springboot.springbcallback;
 
+import com.wykj.springboot.entity.Student;
 import com.wykj.springboot.utils.ApplicationContextUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +23,6 @@ public class MyCommandLineRunner implements CommandLineRunner {
         if ("keason".equals(id)) {
             throw new IllegalArgumentException("参数错误");
         }
-        Object userEntitySingle = ApplicationContextUtil.ctx.getBean("userEntitySingle");
+        Object userEntitySingle = ApplicationContextUtil.getBean("userEntitySingle", Student.class);
     }
 }

@@ -46,19 +46,19 @@ public class RedisCfg {
     }
 
     public static void setStr(String key, String value, long aliveSeconds) {
-        RedissonClient redisson = ApplicationContextUtil.ctx.getBean(RedissonClient.class);
+        RedissonClient redisson = ApplicationContextUtil.getBean(RedissonClient.class);
         RBucket<String> bucket = redisson.getBucket(key);
         bucket.set(value, aliveSeconds, TimeUnit.SECONDS);
     }
 
     public static String getStr(String key) {
-        RedissonClient redisson = ApplicationContextUtil.ctx.getBean(RedissonClient.class);
+        RedissonClient redisson = ApplicationContextUtil.getBean(RedissonClient.class);
         RBucket<String> bucket = redisson.getBucket(key);
         return bucket.get();
     }
 
     public static RedissonClient getClient() {
-        return ApplicationContextUtil.ctx.getBean(RedissonClient.class);
+        return ApplicationContextUtil.getBean(RedissonClient.class);
     }
 
 }
