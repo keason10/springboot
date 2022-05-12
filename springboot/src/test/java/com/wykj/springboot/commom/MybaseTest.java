@@ -1,4 +1,4 @@
-package com.wykj.springboot;
+package com.wykj.springboot.commom;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.ImmutableMap;

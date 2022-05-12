@@ -1,4 +1,4 @@
-package com.wykj.springboot;
+package com.wykj.springboot.commom;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

@@ -13,26 +13,35 @@ import com.wykj.springboot.dto.ApiResponse;
 import com.wykj.springboot.entity.Student;
 import com.wykj.springboot.utils.ApplicationContextUtil;
 import java.io.IOException;
+import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @RestController
 @Slf4j
@@ -95,7 +104,15 @@ public class MyCommonJacksonController {
      * @link {https://hicode.club/articles/2018/03/18/1550590751627.html}
      */
     @GetMapping(path = "/showJackson")
-    public Object showJackson(String str) throws IOException {
+    public Object showJackson(
+            String str,
+            @RequestHeader("http_header_trace_id") String traceId,
+            HttpMethod httpMethod,
+            HttpEntity httpEntity,
+            HttpSession httpsession,
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+
         List<Student> list = Arrays.asList(studentEntity);
         String listStr = objectMapper.writeValueAsString(list);
 
@@ -123,7 +140,7 @@ public class MyCommonJacksonController {
 
         log.info("执行 MyCommonJacksonController showJackson 参数 {}",
                 ApplicationContextUtil.getResourceText("classpath:application-dev.yml"));
-        return stringListMapStrObj ;
+        return stringListMapStrObj;
     }
 
     @PostMapping(path = "/addStudent")

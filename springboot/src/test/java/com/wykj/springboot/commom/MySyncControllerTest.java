@@ -1,4 +1,4 @@
-package com.wykj.springboot;
+package com.wykj.springboot.commom;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ public class MySyncControllerTest extends MySpringBootBaseTest {
 
     @Test
     public void getSync() throws Exception {
-        log.info("com.wykj.springboot.MySyncControllerTest.getSync start");
+        log.info("com.wykj.springboot.commom.MySyncControllerTest.getSync start");
         this.mvc.perform(get("/sync/callable").contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }

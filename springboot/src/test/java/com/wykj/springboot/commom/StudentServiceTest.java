@@ -1,4 +1,4 @@
-package com.wykj.springboot;
+package com.wykj.springboot.commom;
 
 import com.wykj.springboot.service.StudentManger.StudentManger;
 import com.wykj.springboot.service.impl.StudentServiceImpl;

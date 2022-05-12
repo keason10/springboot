@@ -1,4 +1,4 @@
-package com.wykj.springboot;
+package com.wykj.springboot.commom;
 
 import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
