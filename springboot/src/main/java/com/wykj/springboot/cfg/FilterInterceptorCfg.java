@@ -7,7 +7,6 @@ import com.wykj.springboot.entity.UserEntity;
 import com.wykj.springboot.utils.trace.TraceWebFilter;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.catalina.User;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

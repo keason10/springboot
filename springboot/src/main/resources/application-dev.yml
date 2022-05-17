@@ -23,7 +23,6 @@ spring:
       pool-name: MyHikariCP
       connection-test-query: select 1
 
-
   redis:
     host: 127.0.0.1
     port: 63790
@@ -52,3 +51,17 @@ swagger:
 hekkL:
   hll:
     test: hello
+
+
+### 启动所有的spring boot Metric
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    use-global-registry: true
+    web:
+      server:
+        request:
+          metric-name: http.server.requests
