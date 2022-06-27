@@ -16,17 +16,20 @@ import java.util.TimeZone;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -38,11 +41,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 /**
- 0. swagger.enable 需要设置为 true
- 1. maven添加jar
- 2. @EnableSwagger2
- 3  访问 @link { http://localhost:9999/swagger-ui.html}
- 4. 文档生成用swagger注解
+ * 0. swagger.enable 需要设置为 true
+ * 1. maven添加jar
+ * 2. @EnableSwagger2
+ * 3  访问 @link { http://localhost:9999/swagger-ui.html}
+ * 4. 文档生成用swagger注解
  */
 @Configuration
 @EnableSwagger2
@@ -89,6 +92,15 @@ public class Swagger2AndWebCfg extends WebMvcConfigurationSupport {
         super.addResourceHandlers(registry);
     }
 
+    @Bean
+    public InternalResourceViewResolver defaultViewResolver (){
+        InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
+        internalResourceViewResolver.setPrefix("/page/");
+        internalResourceViewResolver.setSuffix(".html");
+        return internalResourceViewResolver;
+    }
+
+
     // 配置中文乱码
     @Bean
     public HttpMessageConverter<String> responseBodyConverter() {
@@ -98,8 +110,9 @@ public class Swagger2AndWebCfg extends WebMvcConfigurationSupport {
 
     /**
      * 查看jackson文档，typeReference
-     * @link {https://www.baeldung.com/jackson-collection-array}
+     *
      * @return
+     * @link {https://www.baeldung.com/jackson-collection-array}
      */
     @Bean
     public ObjectMapper objectMapper() {
@@ -127,7 +140,6 @@ public class Swagger2AndWebCfg extends WebMvcConfigurationSupport {
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
-
 
         objectMapper.configure(Feature.ALLOW_COMMENTS, true);
 

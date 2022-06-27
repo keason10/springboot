@@ -8,16 +8,6 @@ spring:
   profiles:
     active: dev
 
-#文件上传 spring boot默认访问 classpath下边的
-#/static
-#/public
-#/resources
-#/META-INF/resources
-  mvc:
-    view:
-      prefix: /page/
-      suffix: .html
-
 
 # 文件上传配置 上传文件大小 请求文件大小
 multipart:

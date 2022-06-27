@@ -27,7 +27,6 @@ import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
  *         还定义了配置文件spring.mvc开头的配置信息等
  */
 @Configuration
-@EnableWebMvc
 public class FilterInterceptorCfg implements WebMvcConfigurer {
 
     /**

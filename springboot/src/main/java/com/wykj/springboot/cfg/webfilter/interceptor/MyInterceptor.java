@@ -25,15 +25,12 @@ public class MyInterceptor implements HandlerInterceptor {
     //    preHandle 返回false ,就不会执行Controller 方法
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        System.out.println("MyInterceptor preHandle");
-        System.out.println(((HandlerMethod) handler).getBean());
-        System.out.println(((HandlerMethod) handler).getMethod());
-        System.out.println(((HandlerMethod) handler).getMethodParameters());
+        System.out.println("MyInterceptor preHandle");;
         request.setAttribute("startTime", new Date().getTime());
 
         //判断方法是否有注解 如果没有注解返回null,  如果有注解返回声明的相应注解
-        MyMethodAnnotation myMethodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(MyMethodAnnotation.class);
-        PostMapping postMapping = ((HandlerMethod) handler).getMethodAnnotation(PostMapping.class);
+        // MyMethodAnnotation myMethodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(MyMethodAnnotation.class);
+        // PostMapping postMapping = ((HandlerMethod) handler).getMethodAnnotation(PostMapping.class);
         return true;
     }
 

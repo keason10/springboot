@@ -3,25 +3,21 @@ package com.wykj.springboot.controller;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.databind.type.MapType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.wykj.springboot.dto.ApiListResponse;
 import com.wykj.springboot.dto.PageDTO;
 import com.wykj.springboot.entity.UserEntity;
-import com.wykj.springboot.utils.feign.OpenFeignSyncService;
 import com.wykj.springboot.utils.feign.OpenFeignService;
 import com.wykj.springboot.utils.feign.OpenFeignService.Contributor;
+import com.wykj.springboot.utils.feign.OpenFeignSyncService;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Resource;
-import javax.jnlp.UnavailableServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -104,5 +100,18 @@ public class MyFeignTestController {
         //         "repoStr");
         // return listCompletableFuture.get();
     }
+
+    /**
+     * 需要添加@RefreshScope 在类上
+     * @param value
+     * @return
+     */
+    @GetMapping(path = "/test/propertes")
+    @ResponseBody
+    public String getTestProperties(@Value("props.refresh.test")String value) {
+        return value;
+    }
+
+
 
 }

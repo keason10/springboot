@@ -48,8 +48,8 @@ swagger:
 
 
 ###
-hekkL:
-  hll:
+props:
+  refresh:
     test: hello
 
 

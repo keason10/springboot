@@ -1,5 +1,6 @@
 package com.wykj.springboot.utils;
 
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ClassUtils;
@@ -332,5 +334,38 @@ public class BeanUtil extends BeanUtils {
             logger.error(e.getMessage(), e);
             return null;
         }
+    }
+
+    /**
+     * 判断 propertyNames 是否为null
+     *      当为字符串时，调用isEmpty
+     *      当为其他类型时，调用 == null
+     * @param entity
+     * @param propertyNames
+     * @return
+     */
+    public static String checkNotEmpty(Object entity, String ... propertyNames) {
+        if (entity == null) {
+            return "entity为空";
+        }
+        if (propertyNames == null || propertyNames.length == 0) {
+            return "keys为空";
+        }
+        Class<?> aClass = entity.getClass();
+        for (String propertyName : propertyNames) {
+            Field field = ReflectUtil.getField(aClass, propertyName);
+            if (field == null) {
+                return "propertyName"+"：不存在的属性名";
+            }
+            Object fieldValue = ReflectUtil.getFieldValue(entity, field);
+            if (fieldValue == null) {
+                return propertyName + "：值为NULL";
+            }
+            Class<?> fieldType = field.getType();
+            if (String.class.equals(fieldType) && StringUtils.isEmpty(String.valueOf(fieldValue))) {
+                return propertyName + "：值为emptyString";
+            }
+        }
+        return "";
     }
 }
