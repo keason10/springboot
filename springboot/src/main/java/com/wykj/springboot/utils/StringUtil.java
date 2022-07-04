@@ -11,7 +11,7 @@ public class StringUtil {
      * @return
      */
     public static Optional colesceStr(String ... array) {
-        if (array == null) {
+        if (array == null || array.length == 0) {
             return Optional.empty();
         }
         for (int i = 0; i < array.length; i++) {
@@ -23,7 +23,7 @@ public class StringUtil {
         return Optional.empty();
     }
     public static Optional colesceObj(Object ... array) {
-        if (array == null) {
+        if (array == null || array.length == 0) {
             return Optional.empty();
         }
         for (int i = 0; i < array.length; i++) {
